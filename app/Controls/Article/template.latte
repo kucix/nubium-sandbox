@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="card" style="margin: 1em 0;">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="p-2">
+                    <h5 class="card-title"><a href="{plink Article:default, $article->article_id}">{$article->title}</a>
+                    </h5>
+                </div>
+                <div class="p-2">
+                    {if $article->can_rate && $user->isLoggedIn()}
+                    <a n:href="rate! $article->article_id, 1" class="ajax btn btn-sm btn-success">+1</a>
+                    {$article->rating}
+                    <a n:href="rate! $article->article_id, -1" class="ajax btn btn-sm btn-danger">-1</a>
+                    {else}
+                    <a class="btn btn-sm btn-success disabled">+1</a>
+                    {$article->rating}
+                        <a class="btn btn-sm btn-danger disabled">-1</a>
+                    {/if}
+                </div>
+            </div>
+            <h6 class="card-subtitle mb-2 text-muted">{$article->name} @ {$article->published|date:'j. n. Y G:i'}</h6>
+            <p class="card-text">{$article->perex}</p>
+        </div>
+    </div>
+</div>

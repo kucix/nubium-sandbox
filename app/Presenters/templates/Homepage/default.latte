@@ -1,0 +1,29 @@
+{block content}
+<div class="container">
+    Řazení:
+
+    <a n:href="this sorting: name, order: $sorting == 'name' && $order == 'asc' ? 'desc' : 'asc'" n:class="btn, btn-sm, $sorting == 'name' ? 'btn-primary' : 'btn-light'">Název{if $sorting == 'name'} {if $order == 'asc'}&darr;{else}&uarr;{/if}{/if}</a>
+    <a n:href="this sorting: time, order: $sorting == 'time' && $order == 'asc' ? 'desc' : 'asc'" n:class="btn, btn-sm, $sorting == 'time' ? 'btn-primary' : 'btn-light'">Čas{if $sorting == 'time'} {if $order == 'asc'}&darr;{else}&uarr;{/if}{/if}</a>
+    <a n:href="this sorting: rating, order: $sorting == 'rating' && $order == 'asc' ? 'desc' : 'asc'" n:class="btn, btn-sm, $sorting == 'rating' ? 'btn-primary' : 'btn-light'">Hodnocení{if $sorting == 'rating'} {if $order == 'asc'}&darr;{else}&uarr;{/if}{/if}</a>
+</div>
+{snippet articledetail}
+    {foreach $articles as $article}{control article, $article}{/foreach}
+{/snippet}
+
+<div class="pagination">
+    {if !$paginator->isFirst()}
+        <a n:href="default, 1">První</a>
+        &nbsp;|&nbsp;
+        <a n:href="default, $paginator->page-1">Předchozí</a>
+        &nbsp;|&nbsp;
+    {/if}
+
+    Stránka {$paginator->getPage()} z {$paginator->getPageCount()}
+
+    {if !$paginator->isLast()}
+        &nbsp;|&nbsp;
+        <a n:href="default, $paginator->getPage() + 1">Další</a>
+        &nbsp;|&nbsp;
+        <a n:href="default, $paginator->getPageCount()">Poslední</a>
+    {/if}
+</div>

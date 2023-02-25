@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+  php:
+    user: www-data
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+      target: dev
+    volumes:
+      - .:/app
+    environment:
+      DEBUG: true
+      MYSQL_HOST: mysql
+      MYSQL_USER: nubium
+      MYSQL_PASSWORD: "*secret*"
+      MYSQL_DATABASE: nubium
+#no depends_on mysql - can run on its own, e.g. for installing composer or run tests
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    volumes:
+      - .:/app
+      - ./temp:/app/temp
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - php
+      - mysql
+# nginx is not dependent on mysql, but php needs it, nginx is gateway to php and we don't want to block php itself
+
+  mysql:
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    volumes:
+      - nubium_db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: nubium
+      MYSQL_PASSWORD: "*secret*"
+      MYSQL_DATABASE: nubium
+      MYSQL_ROOT_PASSWORD: "*strongpassword*"
+
+volumes:
+  nubium_db:

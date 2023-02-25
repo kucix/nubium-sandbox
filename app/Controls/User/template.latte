@@ -1,0 +1,34 @@
+<div class="d-flex flex-row-reverse" style="color: #fff">
+    {if $user->isLoggedIn()}
+
+    <div class="p-2">
+        <a href="{plink User:changePassword}" class="btn btn-sm btn-primary">Změnit heslo</a>
+        <a href="{plink User:logOut}" class="btn btn-sm btn-primary">Odhlásit</a>
+    </div>
+    <div class="p-2">
+        Přihlášen: {$user->getIdentity()->name}
+    </div>
+
+    {else}
+    <div class="p-2">
+
+        <form n:name=login class="form d-flex has-validation">
+            <div class="p-2">
+                <input n:name=email placeholder="E-mail" size=20 autofocus n:class="form-control, $form[email]->hasErrors() ? ' is-invalid'">
+                <span class="error invalid-feedback" n:ifcontent>{inputError email}</span>
+            </div>
+            <div class="p-2">
+                <input n:name=password placeholder="Heslo" n:class="form-control, $form[password]->hasErrors() ? ' is-invalid'">
+                <span class="error invalid-feedback" n:ifcontent>{inputError password}</span>
+            </div>
+            <div class="p-2">
+                <input n:name=submit class="btn btn-sm btn-primary">
+            </div>
+            <div class="p-2">
+                <a href="{plink User:signUp}" class="btn btn-sm btn-primary">Registrovat</a>
+            </div>
+        </form>
+    </div>
+
+    {/if}
+</div>

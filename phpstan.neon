@@ -1,0 +1,10 @@
+parameters:
+	level: 9
+	paths:
+		- app
+	ignoreErrors:
+	    - '#Cannot cast mixed to [a-zA-Z0-9\\_]+#'
+
+includes:
+    - vendor/phpstan/phpstan-nette/extension.neon
+    - vendor/phpstan/phpstan-nette/rules.neon
